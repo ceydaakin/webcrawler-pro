@@ -48,232 +48,511 @@ class WebDashboard:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebCrawler Pro Dashboard</title>
+    <title>WebCrawler Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gray-50: #fafafa;
+            --gray-100: #f4f4f5;
+            --gray-200: #e4e4e7;
+            --gray-300: #d4d4d8;
+            --gray-400: #a1a1aa;
+            --gray-500: #71717a;
+            --gray-600: #52525b;
+            --gray-700: #3f3f46;
+            --gray-800: #27272a;
+            --gray-900: #18181b;
+
+            --blue-500: #3b82f6;
+            --blue-600: #2563eb;
+            --green-500: #10b981;
+            --green-600: #059669;
+            --purple-500: #8b5cf6;
+            --purple-600: #7c3aed;
+
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+            font-weight: 400;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 32px 24px;
         }
 
         .header {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-align: center;
+            margin-bottom: 40px;
         }
 
         .header h1 {
-            color: #4a5568;
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+            letter-spacing: -0.025em;
         }
 
         .header p {
-            color: #718096;
-            font-size: 1.2em;
+            font-size: 16px;
+            color: var(--gray-500);
+            font-weight: 400;
         }
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
         }
 
         .card {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
 
         .card h3 {
-            color: #4a5568;
-            margin-bottom: 15px;
-            font-size: 1.3em;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.6;
+        }
+
+        .status-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .status-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e2e8f0;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .status-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-label {
+            font-size: 14px;
+            color: var(--gray-600);
+            font-weight: 400;
         }
 
         .status-value {
-            font-weight: bold;
-            color: #38a169;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .status-value.highlight {
+            color: var(--blue-600);
         }
 
         .search-section {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .search-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-900);
         }
 
         .search-box {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 24px;
         }
 
         .search-input {
             flex: 1;
-            padding: 10px;
-            border: 2px solid #e2e8f0;
-            border-radius: 5px;
-            font-size: 16px;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: var(--gray-50);
         }
 
-        .search-btn {
-            padding: 10px 20px;
-            background: #667eea;
-            color: white;
+        .search-input:focus {
+            outline: none;
+            border-color: var(--blue-500);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 16px;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
-        .search-btn:hover {
-            background: #5a67d8;
+        .btn-primary {
+            background: var(--blue-600);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-700);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+            border-color: var(--gray-300);
+        }
+
+        .results-container {
+            min-height: 200px;
         }
 
         .results-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        .results-table th,
-        .results-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
         }
 
         .results-table th {
-            background: #f7fafc;
-            font-weight: bold;
-            color: #4a5568;
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 500;
+            color: var(--gray-600);
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--gray-50);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .results-table th:first-child {
+            border-radius: var(--radius-sm) 0 0 0;
+        }
+
+        .results-table th:last-child {
+            border-radius: 0 var(--radius-sm) 0 0;
+        }
+
+        .results-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: top;
+        }
+
+        .results-table tr:hover {
+            background: var(--gray-50);
         }
 
         .url-cell {
-            max-width: 300px;
+            max-width: 400px;
+        }
+
+        .url-cell a {
+            color: var(--blue-600);
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        .score {
-            font-weight: bold;
-            color: #38a169;
+        .url-cell a:hover {
+            color: var(--blue-700);
+            text-decoration: underline;
         }
 
-        .refresh-btn {
-            padding: 8px 15px;
-            background: #48bb78;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
+        .origin-cell {
+            color: var(--gray-500);
+            font-size: 13px;
+        }
+
+        .depth-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--blue-100);
+            color: var(--blue-700);
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .score-cell {
+            font-weight: 600;
+            color: var(--green-600);
+            font-family: 'SF Mono', Consolas, monospace;
+            font-size: 13px;
         }
 
         .loading {
             text-align: center;
-            padding: 20px;
-            color: #718096;
+            padding: 48px 24px;
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-200);
+            border-top: 2px solid var(--blue-500);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .empty-state-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            opacity: 0.3;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green-500);
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px 16px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🕷️ WebCrawler Pro Dashboard</h1>
-            <p>BLG 480E Project 2 - Multi-Agent Web Crawler & Search System</p>
+            <h1>WebCrawler Pro</h1>
+            <p>Multi-Agent Web Crawler & Search System</p>
         </div>
 
         <div class="dashboard-grid">
             <div class="card">
-                <h3>📊 System Status</h3>
-                <div id="system-status">
-                    <div class="loading">Loading...</div>
+                <div class="card-header">
+                    <h3>
+                        <span class="status-indicator"></span>
+                        System Status
+                    </h3>
+                    <button class="btn btn-secondary" onclick="loadSystemStatus()">Refresh</button>
                 </div>
-                <button class="refresh-btn" onclick="loadSystemStatus()">🔄 Refresh</button>
+                <div class="status-grid" id="system-status">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        Loading system status...
+                    </div>
+                </div>
             </div>
 
             <div class="card">
-                <h3>⚡ Performance Metrics</h3>
-                <div id="performance-metrics">
-                    <div class="loading">Loading...</div>
+                <div class="card-header">
+                    <h3>Performance Metrics</h3>
+                    <button class="btn btn-secondary" onclick="loadPerformanceMetrics()">Refresh</button>
                 </div>
-                <button class="refresh-btn" onclick="loadPerformanceMetrics()">🔄 Refresh</button>
+                <div class="status-grid" id="performance-metrics">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        Loading performance data...
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="search-section">
-            <h3>🔍 Search Indexed Content</h3>
-            <div class="search-box">
-                <input type="text" id="search-query" class="search-input" placeholder="Enter search query..." onkeypress="handleEnter(event)">
-                <button class="search-btn" onclick="performSearch()">Search</button>
+            <div class="search-header">
+                <h3>Search Indexed Content</h3>
             </div>
-            <div id="search-results"></div>
+            <div class="search-box">
+                <input type="text" id="search-query" class="search-input" placeholder="Search your crawled content..." onkeypress="handleEnter(event)">
+                <button class="btn btn-primary" onclick="performSearch()">Search</button>
+            </div>
+            <div class="results-container" id="search-results">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🔍</div>
+                    Enter a search query above to find relevant content
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         // Load system status
         async function loadSystemStatus() {
+            const statusDiv = document.getElementById('system-status');
+            statusDiv.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Loading...
+                </div>
+            `;
+
             try {
                 const response = await fetch('/api/status');
                 const data = await response.json();
 
-                const html = Object.entries(data)
-                    .map(([key, value]) => `
+                const statusItems = [
+                    { key: 'total_pages', label: 'Total Pages Crawled', highlight: true },
+                    { key: 'unique_domains', label: 'Unique Domains' },
+                    { key: 'index_size', label: 'Index Size' },
+                    { key: 'db_size', label: 'Database Size' },
+                    { key: 'last_crawl', label: 'Last Crawl' },
+                    { key: 'uptime', label: 'System Uptime' }
+                ];
+
+                const html = statusItems
+                    .filter(item => data[item.key] !== undefined)
+                    .map(item => `
                         <div class="status-item">
-                            <span>${key.replace(/_/g, ' ').replace(/\\b\\w/g, l => l.toUpperCase())}</span>
-                            <span class="status-value">${value}</span>
+                            <span class="status-label">${item.label}</span>
+                            <span class="status-value ${item.highlight ? 'highlight' : ''}">${data[item.key]}</span>
                         </div>
                     `).join('');
 
-                document.getElementById('system-status').innerHTML = html;
+                statusDiv.innerHTML = html || '<div class="empty-state">No status data available</div>';
             } catch (error) {
-                document.getElementById('system-status').innerHTML = '<div style="color: red;">Error loading status</div>';
+                statusDiv.innerHTML = '<div class="empty-state" style="color: var(--red-500);">Error loading status data</div>';
             }
         }
 
         // Load performance metrics
         async function loadPerformanceMetrics() {
+            const metricsDiv = document.getElementById('performance-metrics');
+            metricsDiv.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Loading...
+                </div>
+            `;
+
             try {
                 const response = await fetch('/api/performance');
                 const data = await response.json();
 
-                const html = Object.entries(data)
-                    .map(([key, value]) => `
+                const metricItems = [
+                    { key: 'avg_page_size', label: 'Avg Page Size' },
+                    { key: 'crawl_success_rate', label: 'Success Rate', suffix: '%' },
+                    { key: 'pages_per_domain', label: 'Pages Per Domain' },
+                    { key: 'avg_depth', label: 'Average Depth' }
+                ];
+
+                const html = metricItems
+                    .filter(item => data[item.key] !== undefined)
+                    .map(item => `
                         <div class="status-item">
-                            <span>${key.replace(/_/g, ' ').replace(/\\b\\w/g, l => l.toUpperCase())}</span>
-                            <span class="status-value">${value}</span>
+                            <span class="status-label">${item.label}</span>
+                            <span class="status-value">${data[item.key]}${item.suffix || ''}</span>
                         </div>
                     `).join('');
 
-                document.getElementById('performance-metrics').innerHTML = html;
+                metricsDiv.innerHTML = html || '<div class="empty-state">No performance data available</div>';
             } catch (error) {
-                document.getElementById('performance-metrics').innerHTML = '<div style="color: red;">Error loading metrics</div>';
+                metricsDiv.innerHTML = '<div class="empty-state" style="color: var(--red-500);">Error loading performance data</div>';
             }
         }
 
@@ -282,14 +561,25 @@ class WebDashboard:
             const query = document.getElementById('search-query').value.trim();
             if (!query) return;
 
-            document.getElementById('search-results').innerHTML = '<div class="loading">Searching...</div>';
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Searching for "${query}"...
+                </div>
+            `;
 
             try {
                 const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
                 const results = await response.json();
 
                 if (results.length === 0) {
-                    document.getElementById('search-results').innerHTML = '<div>No results found.</div>';
+                    resultsDiv.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🔍</div>
+                            No results found for "${query}"
+                        </div>
+                    `;
                     return;
                 }
 
@@ -300,23 +590,27 @@ class WebDashboard:
                                 <th>URL</th>
                                 <th>Origin</th>
                                 <th>Depth</th>
-                                <th>Score</th>
+                                <th>Relevance</th>
                             </tr>
                         </thead>
                         <tbody>
                             ${results.map(result => `
                                 <tr>
-                                    <td class="url-cell"><a href="${result.url}" target="_blank">${result.url}</a></td>
-                                    <td>${result.origin}</td>
-                                    <td>${result.depth}</td>
-                                    <td class="score">${result.score.toFixed(3)}</td>
+                                    <td class="url-cell">
+                                        <a href="${result.url}" target="_blank">${result.url}</a>
+                                    </td>
+                                    <td class="origin-cell">${result.origin}</td>
+                                    <td>
+                                        <span class="depth-badge">${result.depth}</span>
+                                    </td>
+                                    <td class="score-cell">${result.score.toFixed(3)}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
                     </table>
                 `;
 
-                document.getElementById('search-results').innerHTML = tableHtml;
+                resultsDiv.innerHTML = tableHtml;
             } catch (error) {
                 document.getElementById('search-results').innerHTML = '<div style="color: red;">Error performing search</div>';
             }
@@ -423,10 +717,10 @@ async def run_server():
     runner = web.AppRunner(app)
     await runner.setup()
 
-    site = web.TCPSite(runner, '127.0.0.1', 8080)
+    site = web.TCPSite(runner, '127.0.0.1', 8888)
     await site.start()
 
-    print("🌐 WebCrawler Pro Dashboard running at: http://127.0.0.1:8080")
+    print("🌐 WebCrawler Pro Dashboard running at: http://127.0.0.1:8888")
     print("📊 Features: Real-time status, performance metrics, search interface")
     print("🔄 Auto-refresh: Status updates every 30 seconds")
     print("⏹️  Press Ctrl+C to stop the server")
