@@ -1,7 +1,7 @@
 BLG 480E Project 2 - Multi-Agent Web Crawler & Search System
 ============================================================
 
-GitHub Repository: https://github.com/ceydaakin/webcrawler-pro.git
+GitHub Repository: https://github.com/ceydaakin/web-crawler-multiagent.git
 
 Project: WebCrawler Pro
 Student: Ceyda Akin
@@ -12,8 +12,8 @@ QUICK START INSTRUCTIONS FOR TEACHERS/REVIEWERS:
 ===============================================
 
 1. Clone the repository:
-   git clone https://github.com/ceydaakin/webcrawler-pro.git
-   cd webcrawler-pro
+   git clone https://github.com/ceydaakin/web-crawler-multiagent.git
+   cd web-crawler-multiagent
 
 2. Install dependencies:
    pip install -r requirements.txt aiohttp-cors

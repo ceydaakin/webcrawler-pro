@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
 [![Async](https://img.shields.io/badge/Async-Native-green.svg)](https://docs.python.org/3/library/asyncio.html)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![BLG 480E](https://img.shields.io/badge/Course-BLG%20480E-red.svg)](https://github.com/ceydaakin/webcrawler-pro)
+[![BLG 480E](https://img.shields.io/badge/Course-BLG%20480E-red.svg)](https://github.com/ceydaakin/web-crawler-multiagent)
 
 A production-ready web crawler and search system built using a **multi-agent AI development workflow**. Features real-time search during active crawling, native TF-IDF implementation, and both CLI and web interfaces.
 
@@ -11,8 +11,8 @@ A production-ready web crawler and search system built using a **multi-agent AI 
 
 ### 1. Clone & Setup
 ```bash
-git clone https://github.com/ceydaakin/webcrawler-pro.git
-cd webcrawler-pro
+git clone https://github.com/ceydaakin/web-crawler-multiagent.git
+cd web-crawler-multiagent
 pip install -r requirements.txt aiohttp-cors
 ```
 
@@ -160,7 +160,7 @@ docker-compose up -d
 ## 📁 Project Structure
 
 ```
-webcrawler-pro/
+web-crawler-multiagent/
 ├── src/                    # Core implementation
 │   ├── crawler/           # Web crawling logic
 │   ├── search/            # Native search engine
@@ -181,7 +181,7 @@ webcrawler-pro/
 **Course:** BLG 480E - Introduction to Machine Learning  
 **Project:** Multi-Agent AI Workflow for Web Crawler Development  
 **Student:** Ceyda Akin  
-**Repository:** https://github.com/ceydaakin/webcrawler-pro  
+**Repository:** https://github.com/ceydaakin/web-crawler-multiagent  
 
 ### **Required Deliverables:**
 - ✅ **PRD:** `product_prd.md` - Technical architecture
@@ -230,7 +230,7 @@ After setup, you should be able to:
 
 ## 📞 Support
 
-- **Issues:** https://github.com/ceydaakin/webcrawler-pro/issues
+- **Issues:** https://github.com/ceydaakin/web-crawler-multiagent/issues
 - **Documentation:** See `docs/` directory
 - **Architecture:** See `product_prd.md`
 - **Deployment:** See `recommendation.md`
