@@ -17,9 +17,58 @@ WebCrawler Pro was built using an innovative AI-assisted development methodology
 
 Rather than traditional single-developer approach, we employed a team of specialized AI development agents, each with distinct expertise areas. This methodology enabled parallel development, cross-domain validation, and innovative architectural solutions that emerged from agent collaboration.
 
-## Specialized Development Teams
+## Core Requirement Fulfillment Through Multi-Agent Collaboration
 
-### 1. System Architecture Team 🏗️
+### PRIMARY AGENTS FOR CORE REQUIREMENTS
+
+#### 1. **Indexing Agent** - `index(origin, k)` Implementation
+**Core Requirement**: *"Given a URL, initiate a web crawl to at most depth k, ensuring that you never crawl the same page twice... include some notion of back pressure"*
+
+**Agent Responsibilities**:
+- Implement exact `index(origin, k)` function signature
+- Ensure no duplicate page crawling using set-based deduplication
+- Design backpressure with queue depth limits and rate limiting
+- Optimize for large-scale single-machine operation (1000+ pages/min)
+
+**Key Contributions**:
+- Depth-limited crawling with strict `k` parameter enforcement
+- URL deduplication using `Set[str]` and database persistence
+- Multi-layer backpressure: queue depth + rate limiting + memory management
+- Async architecture for maximum single-machine throughput
+
+#### 2. **Search Agent** - `search(query)` Implementation  
+**Core Requirement**: *"Given a query, return all relevant URLs... returns a list of triples (relevant_url, origin_url, depth)... should be able to run while indexing is still active"*
+
+**Agent Responsibilities**:
+- Implement exact return format: `List[(relevant_url, origin_url, depth)]`
+- Enable real-time search during active crawling/indexing
+- Design native relevancy scoring (no external search libraries)
+- Ensure concurrent search operations don't block indexing
+
+**Key Contributions**:
+- Native TF-IDF implementation for relevancy scoring
+- Real-time index updates during active crawling
+- Lock-free search architecture for concurrent operations
+- Exact triple return format as specified in requirements
+
+#### 3. **Interface Agent** - CLI/UI Implementation
+**Core Requirement**: *"Provide a simple UI or CLI that makes it easy to initiate indexing and search, and view the state of the system (indexing progress, queue depth, back pressure status)"*
+
+**Agent Responsibilities**:
+- Design simple CLI for indexing, search, and system status
+- Provide real-time system state visibility
+- Show indexing progress, queue depth, and backpressure status
+- Enable easy initiation of core functions
+
+**Key Contributions**:
+- Simple CLI: `python -m src.main index/search/status`
+- Real-time progress monitoring with queue depth and backpressure
+- Web dashboard (bonus): Professional interface with live updates
+- System state persistence for resumable operations
+
+## SUPPORTING SPECIALIST TEAMS
+
+### 4. System Architecture Team 🏗️
 
 **Responsibilities**:
 - Overall system design and component interaction patterns
