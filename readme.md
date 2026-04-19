@@ -77,9 +77,10 @@ python -m src.main search --query "python tutorial" --format json
 ```
 
 ### ✅ **Multi-Agent Development**
-- **7 Specialized Agents:** Documented in `multi_agent_workflow.md`
-- **Collaborative Process:** Interface-first design, cross-team validation
-- **Quality Control:** Multiple review cycles and integration testing
+- **Agent Teams Pattern:** Main Agent (Team Lead) + 8 collaborative teammates
+- **Shared Task List:** Teammates claim work and communicate directly with each other
+- **Collaborative Development:** Interface-first design, cross-team validation, direct communication
+- **Quality Control:** Multiple review cycles and collaborative integration testing
 
 ## 🏗️ Architecture Highlights
 
