@@ -1,0 +1,118 @@
+# BLG 480E Project 2 - Web Crawler and Search System Configuration
+
+# Crawler Configuration
+crawler:
+  # Concurrent crawling settings
+  max_concurrent_requests: 10
+  request_timeout: 30
+  max_retries: 3
+  retry_delay: 1.0
+
+  # Rate limiting and backpressure
+  request_delay: 1.0  # Seconds between requests to same domain
+  max_queue_depth: 10000
+  queue_check_interval: 5.0
+
+  # Content processing
+  max_page_size: 10485760  # 10MB max page size
+  allowed_content_types:
+    - "text/html"
+    - "application/xhtml+xml"
+
+  # Crawl behavior
+  respect_robots_txt: true
+  follow_redirects: true
+  max_redirects: 5
+  user_agent: "BLG480E-WebCrawler/1.0"
+
+  # Content extraction
+  extract_links: true
+  extract_text: true
+  extract_metadata: true
+
+# Search Engine Configuration
+search:
+  # Index settings
+  index_batch_size: 100
+  max_index_memory: 536870912  # 512MB
+
+  # Query processing
+  max_search_results: 50
+  min_relevance_score: 0.001
+  default_search_limit: 20
+
+  # Text processing
+  remove_stop_words: true
+  enable_stemming: true
+  min_term_length: 2
+  max_term_length: 50
+
+  # Ranking factors
+  title_weight: 2.0
+  content_weight: 1.0
+  url_weight: 0.5
+  freshness_weight: 0.3
+
+# Database Configuration
+database:
+  # Connection settings
+  database_url: "sqlite:///data/webcrawler.db"
+  connection_pool_size: 20
+  max_overflow: 30
+  pool_timeout: 30
+
+  # Performance settings
+  batch_insert_size: 1000
+  commit_interval: 100
+  vacuum_interval: 86400  # 24 hours
+
+  # Backup settings
+  auto_backup: true
+  backup_interval: 21600  # 6 hours
+  backup_retention_days: 30
+
+# Monitoring Configuration
+monitoring:
+  # Logging
+  log_level: "INFO"
+  log_file: "logs/webcrawler.log"
+  log_rotation: "daily"
+  log_retention_days: 30
+
+  # Metrics
+  enable_metrics: true
+  metrics_port: 8000
+  metrics_interval: 60
+
+  # Health checks
+  health_check_interval: 30
+  system_resource_monitoring: true
+
+# UI Configuration
+ui:
+  # Web dashboard
+  enable_web_dashboard: true
+  dashboard_port: 8080
+  dashboard_host: "127.0.0.1"
+
+  # CLI settings
+  cli_output_format: "table"  # table, json, yaml
+  show_progress_bars: true
+  color_output: true
+
+# System Configuration
+system:
+  # Resource limits
+  max_memory_usage: 2147483648  # 2GB
+  max_cpu_usage: 80  # Percentage
+  temp_directory: "/tmp/webcrawler"
+
+  # Security
+  max_url_length: 2048
+  allowed_schemes: ["http", "https"]
+  blocked_domains: []
+
+  # Recovery
+  enable_state_persistence: true
+  checkpoint_interval: 300  # 5 minutes
+  auto_resume_on_startup: true

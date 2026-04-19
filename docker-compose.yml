@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  webcrawler:
+    build: .
+    container_name: webcrawler-pro
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./config:/app/config
+    environment:
+      - PYTHONPATH=/app
+      - WEBCRAWLER_LOG_LEVEL=INFO
+    networks:
+      - webcrawler-net
+    restart: unless-stopped
+    command: python scripts/init_db.py
+
+  # Optional: Add monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: webcrawler-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - webcrawler-net
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: webcrawler-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - webcrawler-net
+    profiles:
+      - monitoring
+
+networks:
+  webcrawler-net:
+    driver: bridge
+
+volumes:
+  grafana-storage:
